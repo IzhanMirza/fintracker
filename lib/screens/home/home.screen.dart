@@ -125,154 +125,148 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: (){
-            Scaffold.of(context).openDrawer();
-          },
-        ),
-        title: const Text("Home", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
-      ),
-      body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Hi! Good ${greeting()}"),
-                    BlocConsumer<AppCubit, AppState>(
-                        listener: (context, state){
-
-                        },
-                        builder: (context, state)=>Text(state.username ?? "Guest", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),)
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 190,
-                width: double.infinity,
-                child: AccountsSlider(accounts: _accounts,),
-              ),
-
-              const SizedBox(height: 15,),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
+      body: SafeArea(
+        child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 10,),
+                Container(
+                  margin: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("Payments", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
-                      const Expanded(child: SizedBox()),
-                      MaterialButton(
-                        onPressed: (){
-                          handleChooseDateRange();
-                        },
-                        height: double.minPositive,
-                        padding: EdgeInsets.zero,
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        child: Row(
-                          children: [
-                            Text("${DateFormat("dd MMM").format(_range.start)} - ${DateFormat("dd MMM").format(_range.end)}", style: Theme.of(context).textTheme.bodySmall,),
-                            const Icon(Icons.arrow_drop_down_outlined)
-                          ],
-                        ),
-                      ),
-                    ]
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                        child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(18),
-                              color: ThemeColors.success.withOpacity(0.2),
-                            ),
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text.rich(
-                                      TextSpan(
-                                          children: [
-                                            //TextSpan(text: "▼", style: TextStyle(color: ThemeColors.success)),
-                                            TextSpan(text:"Income", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
-                                          ]
-                                      )
-                                  ),
-                                  const SizedBox(height: 5,),
-                                  CurrencyText(_income, style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: ThemeColors.success, fontFamily: GoogleFonts.jetBrainsMono().fontFamily),)
-                                ],
-                              ),
-                            )
-                        )
-                    ),
-                    const SizedBox(width: 10,),
-                    Expanded(
-                        child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(18),
-                              color: ThemeColors.error.withOpacity(0.2),
-                            ),
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text.rich(
-                                      TextSpan(
-                                          children: [
-                                            //TextSpan(text: "▲", style: TextStyle(color: ThemeColors.error)),
-                                            TextSpan(text:"Expense", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
-                                          ]
-                                      )
-                                  ),
-                                  const SizedBox(height: 5,),
-                                  CurrencyText(_expense, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: ThemeColors.error, fontFamily: GoogleFonts.jetBrainsMono().fontFamily),)
-                                ],
-                              ),
-                            )
-                        )
-                    ),
-                  ],
-                ),
-              ),
-              _payments.isNotEmpty? ListView.separated(
-                padding:  EdgeInsets.zero,
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, index){
-                  return PaymentListItem(payment: _payments[index], onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (builder)=>PaymentForm(type: _payments[index].type, payment: _payments[index],)));
-                  });
+                      Text("Hi! Good ${greeting()}"),
+                      BlocConsumer<AppCubit, AppState>(
+                          listener: (context, state){
 
-                },
-                separatorBuilder: (BuildContext context, int index){
-                  return Container(
-                    width: double.infinity,
-                    color: Colors.grey.withAlpha(25),
-                    height: 1,
-                    margin: const EdgeInsets.only(left: 75, right: 20),
-                  );
-                },
-                itemCount: _payments.length,
-              ):Container(
-                padding: const EdgeInsets.symmetric(vertical: 25),
-                alignment: Alignment.center,
-                child: const Text("No payments!"),
-              ),
-            ],
-          )
+                          },
+                          builder: (context, state)=>Text(state.username ?? "Guest", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),)
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 190,
+                  width: double.infinity,
+                  child: AccountsSlider(accounts: _accounts,),
+                ),
+
+                const SizedBox(height: 15,),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                      children: [
+                        const Text("Payments", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
+                        const Expanded(child: SizedBox()),
+                        MaterialButton(
+                          onPressed: (){
+                            handleChooseDateRange();
+                          },
+                          height: double.minPositive,
+                          padding: EdgeInsets.zero,
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          child: Row(
+                            children: [
+                              Text("${DateFormat("dd MMM").format(_range.start)} - ${DateFormat("dd MMM").format(_range.end)}", style: Theme.of(context).textTheme.bodySmall,),
+                              const Icon(Icons.arrow_drop_down_outlined)
+                            ],
+                          ),
+                        ),
+                      ]
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                          child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(18),
+                                color: ThemeColors.success.withOpacity(0.2),
+                              ),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text.rich(
+                                        TextSpan(
+                                            children: [
+                                              //TextSpan(text: "▼", style: TextStyle(color: ThemeColors.success)),
+                                              TextSpan(text:"Income", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+                                            ]
+                                        )
+                                    ),
+                                    const SizedBox(height: 5,),
+                                    CurrencyText(_income, style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: ThemeColors.success, fontFamily: GoogleFonts.jetBrainsMono().fontFamily),)
+                                  ],
+                                ),
+                              )
+                          )
+                      ),
+                      const SizedBox(width: 10,),
+                      Expanded(
+                          child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(18),
+                                color: ThemeColors.error.withOpacity(0.2),
+                              ),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text.rich(
+                                        TextSpan(
+                                            children: [
+                                              //TextSpan(text: "▲", style: TextStyle(color: ThemeColors.error)),
+                                              TextSpan(text:"Expense", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+                                            ]
+                                        )
+                                    ),
+                                    const SizedBox(height: 5,),
+                                    CurrencyText(_expense, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: ThemeColors.error, fontFamily: GoogleFonts.jetBrainsMono().fontFamily),)
+                                  ],
+                                ),
+                              )
+                          )
+                      ),
+                    ],
+                  ),
+                ),
+                _payments.isNotEmpty? ListView.separated(
+                  padding:  EdgeInsets.zero,
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, index){
+                    return PaymentListItem(payment: _payments[index], onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (builder)=>PaymentForm(type: _payments[index].type, payment: _payments[index],)));
+                    });
+
+                  },
+                  separatorBuilder: (BuildContext context, int index){
+                    return Container(
+                      width: double.infinity,
+                      color: Colors.grey.withAlpha(25),
+                      height: 1,
+                      margin: const EdgeInsets.only(left: 75, right: 20),
+                    );
+                  },
+                  itemCount: _payments.length,
+                ):Container(
+                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  alignment: Alignment.center,
+                  child: const Text("No payments!"),
+                ),
+              ],
+            )
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: ()=> openAddPaymentPage(PaymentType.credit),

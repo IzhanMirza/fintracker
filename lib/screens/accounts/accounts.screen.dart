@@ -64,12 +64,6 @@ class _AccountsScreenState extends State<AccountsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: (){
-              Scaffold.of(context).openDrawer();
-            },
-          ),
           title: const Text("Accounts", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
         ),
         body: ListView.builder(

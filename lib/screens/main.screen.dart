@@ -6,6 +6,7 @@ import 'package:fintracker/screens/onboard/onboard_screen.dart';
 import 'package:fintracker/screens/settings/settings.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
 
 class MainScreen extends StatefulWidget{
   const MainScreen({super.key});
@@ -14,13 +15,13 @@ class MainScreen extends StatefulWidget{
 }
 
 class _MainScreenState extends State<MainScreen>{
-  final PageController _controller = PageController(keepPage: true);
   int _selected = 0;
 
   @override
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AppCubit, AppState>(
@@ -30,49 +31,27 @@ class _MainScreenState extends State<MainScreen>{
           return OnboardScreen();
         }
         return  Scaffold(
-          body: PageView(
-            controller: _controller,
-            physics: const NeverScrollableScrollPhysics(),
+          body: IndexedStack(
+            index: _selected,
             children: const [
               HomeScreen(),
               AccountsScreen(),
-              CategoriesScreen()
+              CategoriesScreen(),
+              SettingsScreen()
             ],
-            onPageChanged: (int index){
-              setState(() {
-                _selected = index;
-              });
-            },
           ),
           bottomNavigationBar: NavigationBar(
             selectedIndex: _selected,
             destinations: const [
-              NavigationDestination(icon: Icon(Icons.home), label: "Home"),
-              NavigationDestination(icon: Icon(Icons.wallet), label: "Accounts"),
-              NavigationDestination(icon: Icon(Icons.category), label: "Categories"),
+              NavigationDestination(icon: Icon(Iconsax.home), label: "Home"),
+              NavigationDestination(icon: Icon(Iconsax.wallet), label: "Accounts"),
+              NavigationDestination(icon: Icon(Iconsax.category), label: "Categories"),
+              NavigationDestination(icon: Icon(Iconsax.setting), label: "Settings"),
             ],
             onDestinationSelected: (int selected){
-              _controller.jumpToPage(selected);
-            },
-          ),
-          drawer: NavigationDrawer(
-            selectedIndex: _selected,
-            children: const [
-              NavigationDrawerDestination(icon: Icon(Icons.home), label: Text("Home")),
-              NavigationDrawerDestination(icon: Icon(Icons.wallet), label: Text("Accounts")),
-              NavigationDrawerDestination(icon: Icon(Icons.category), label: Text("Categories")),
-              NavigationDrawerDestination(icon: Icon(Icons.settings), label: Text("Settings")),
-            ],
-            onDestinationSelected: (int selected){
-              Navigator.pop(context);
-              if(selected < 3){
-                _controller.jumpToPage(selected);
-              }
-
-              if(selected == 3){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const SettingsScreen()));
-              }
-
+              setState(() {
+                _selected = selected;
+              });
             },
           ),
         );

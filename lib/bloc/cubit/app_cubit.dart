@@ -24,6 +24,13 @@ class AppState{
 class AppCubit extends Cubit<AppState>{
   AppCubit(AppState initialState) : super(initialState);
 
+  Future<void> update({String? username, String? currency}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(username!=null) await prefs.setString("username", username);
+    if(currency!=null) await prefs.setString("currency", currency);
+    emit(await AppState.getState());
+  }
+
   Future<void> updateUsername(username) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString("username", username);

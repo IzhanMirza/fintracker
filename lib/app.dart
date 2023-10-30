@@ -1,6 +1,7 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:fintracker/bloc/cubit/app_cubit.dart';
 import 'package:fintracker/screens/main.screen.dart';
+import 'package:fintracker/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +11,26 @@ import 'package:month_year_picker/month_year_picker.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
+  ThemeData _buildTheme(Brightness brightness){
+    ThemeData baseTheme = ThemeData(
+        brightness: brightness,
+      colorSchemeSeed: ThemeColors.primary,
+      useMaterial3: true,
+        navigationBarTheme: NavigationBarThemeData(
+          labelTextStyle: MaterialStateProperty.resolveWith((Set<MaterialState> states){
+            TextStyle style =  TextStyle(fontWeight: FontWeight.w500, fontSize: 12, letterSpacing: -0.3, fontFamily: GoogleFonts.karla().fontFamily);
+            if(states.contains(MaterialState.selected)){
+              style = style.merge(const TextStyle(fontWeight: FontWeight.w600));
+            }
+            return style;
+          }),
+        )
+    );
+
+    return baseTheme.copyWith(
+      textTheme: GoogleFonts.karlaTextTheme(baseTheme.textTheme),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
@@ -18,50 +39,17 @@ class App extends StatelessWidget {
         statusBarIconBrightness: isDarkMode?  Brightness.light: Brightness.dark
     ));
 
-    return  BlocBuilder<AppCubit, AppState>(
-        builder: (context, state){
-          return DynamicColorBuilder(
-              builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-                ColorScheme scheme = ColorScheme.fromSeed(seedColor: Color(state.themeColor), brightness: MediaQuery.of(context).platformBrightness);
-
-                if (isDarkMode && darkDynamic != null) {
-                  scheme = darkDynamic.harmonized();
-                }
-                if (!isDarkMode && lightDynamic != null) {
-                  scheme = lightDynamic.harmonized();
-                }
-
-
-                return MaterialApp(
-                  title: 'Fintracker',
-                  theme: ThemeData(
-                      colorScheme: scheme,
-                      useMaterial3: true,
-                      brightness: MediaQuery.of(context).platformBrightness,
-                      textTheme: GoogleFonts.rubikTextTheme(
-                        isDarkMode? ThemeData.dark().textTheme: ThemeData.light().textTheme,
-                      ),
-                      navigationBarTheme: NavigationBarThemeData(
-                        labelTextStyle: MaterialStateProperty.resolveWith((Set<MaterialState> states){
-                          TextStyle style =  TextStyle(fontWeight: FontWeight.w500, fontSize: 12, fontFamily: GoogleFonts.rubik().fontFamily);
-                          if(states.contains(MaterialState.selected)){
-                            style = style.merge(const TextStyle(fontWeight: FontWeight.w600));
-                          }
-                          return style;
-                        }),
-                      )
-                  ),
-                  home: const MainScreen(),
-                  localizationsDelegates: const [
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    MonthYearPickerLocalizations.delegate,
-                  ],
-                  debugShowCheckedModeBanner: false,
-                );
-              }
-          );
-        }
+    return MaterialApp(
+      title: 'Fintracker',
+      theme: _buildTheme(Brightness.light),
+      darkTheme: _buildTheme(Brightness.dark),
+      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      home: const MainScreen(),
+      localizationsDelegates: const [
+        GlobalWidgetsLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        MonthYearPickerLocalizations.delegate,
+      ],
     );
   }
 }

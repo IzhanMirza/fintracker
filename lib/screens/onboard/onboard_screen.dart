@@ -1,4 +1,3 @@
-import 'package:fintracker/screens/onboard/widgets/currency_pic.dart';
 import 'package:fintracker/screens/onboard/widgets/landing.dart';
 import 'package:fintracker/screens/onboard/widgets/profile.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +14,11 @@ class OnboardScreen extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           LandingPage(onGetStarted: (){
-            _pageController.jumpToPage(1);
+            _pageController.animateToPage(1,duration: Duration(milliseconds: 100), curve: Curves.bounceIn);
           },),
           ProfileWidget(onGetStarted: (){
-            _pageController.jumpToPage(2);
+            _pageController.animateToPage(2,duration: Duration(milliseconds: 100), curve: Curves.bounceIn);
           },),
-          const CurrencyPicWidget()
         ],
       ),
     );

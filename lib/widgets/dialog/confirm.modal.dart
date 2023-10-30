@@ -19,7 +19,13 @@ class ConfirmModal extends StatelessWidget{
     return AlertDialog(
       title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600),),
       insetPadding: const EdgeInsets.all(20),
-      content: content,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10)
+      ),
+      content: SizedBox(
+        width: MediaQuery.of(context).size.width - 60 < 500 ? MediaQuery.of(context).size.width - 60 : 500,
+        child: content,
+      ),
       actions: [
         Row(
           children: [
@@ -28,7 +34,8 @@ class ConfirmModal extends StatelessWidget{
                     label: "No",
                     onPressed: onCancel,
                     color: Theme.of(context).colorScheme.primary,
-                    type: AppButtonType.outlined
+                    type: AppButtonType.outlined,
+                  borderRadius: BorderRadius.circular(100),
                 )
             ),
             const SizedBox(width: 15,),
@@ -37,6 +44,7 @@ class ConfirmModal extends StatelessWidget{
                   label: "Yes",
                   onPressed: onConfirm,
                   color: ThemeColors.error,
+                  borderRadius: BorderRadius.circular(100),
                 )
             ),
           ],
