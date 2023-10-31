@@ -121,7 +121,7 @@ class AppButton extends StatelessWidget{
                 highlightElevation: 0,
                 hoverElevation: 0,
                 shape:  RoundedRectangleBorder(
-                    borderRadius: borderRadius ?? BorderRadius.circular(dimension * 0.35),
+                    borderRadius: borderRadius ?? BorderRadius.circular(100),
                     side: BorderSide(
                         width: borderWidth,
                         color: borderColor

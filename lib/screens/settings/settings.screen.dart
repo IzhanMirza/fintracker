@@ -60,15 +60,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("What should we call you?", style: theme.textTheme.bodyLarge!.apply(color: ColorHelper.darken(theme.textTheme.bodyLarge!.color!), fontWeightDelta: 1),),
-                          const SizedBox(height: 15,),
                           TextFormField(
                             controller: controller,
                             decoration: InputDecoration(
-                                label: const Text("Name"),
+                                label: const Text("What should we call you?"),
                                 hintText: "Enter your name",
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
+                                filled: true,
+                                border: UnderlineInputBorder(
+                                  borderRadius: BorderRadius.circular(90),
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15)
                             ),
@@ -99,7 +98,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   );
                 });
               },
-              leading: const CircleAvatar(child: Icon(Iconsax.user)),
+              leading: const CircleAvatar(child: Icon(Iconsax.profile_circle5)),
               title: const Text('Name'),
               subtitle: Selector<AppProvider, String?>(
                   selector: (_,provider)=>provider.username,
