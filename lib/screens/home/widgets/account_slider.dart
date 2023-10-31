@@ -37,17 +37,7 @@ class _AccountSlider extends State<AccountsSlider>{
                 child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(18),
-                      gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          stops: const [
-                            0.1,
-                            0.9
-                          ],
-                          colors: [
-                            account.color.withOpacity(0.7),
-                            account.color.withOpacity(1)
-                          ]
-                      ),
+                     color: account.color
                     ),
                     margin: const EdgeInsets.symmetric(horizontal: 15),
                     child: Stack(
@@ -60,7 +50,7 @@ class _AccountSlider extends State<AccountsSlider>{
                               CurrencyText(account.balance ?? 0, style: Theme.of(context).textTheme.headlineMedium?.merge(
                                 TextStyle(
                                     color: Colors.white, fontFamily: GoogleFonts.jetBrainsMono().fontFamily,
-                                    fontWeight: FontWeight.w700
+                                    fontWeight: FontWeight.w700,
                                 ),
                               )),
                               Text("Balance", style: Theme.of(context).textTheme.bodyMedium?.apply(color: Colors.white.withOpacity(0.9)),),
@@ -89,8 +79,8 @@ class _AccountSlider extends State<AccountsSlider>{
             },
           ),
         ),
-        const SizedBox(height: 10,),
-        SizedBox(
+        if(widget.accounts.length > 1)const SizedBox(height: 10,),
+        if(widget.accounts.length>1)SizedBox(
           width: double.infinity,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,

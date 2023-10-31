@@ -1,18 +1,19 @@
 import 'package:fintracker/app.dart';
-import 'package:fintracker/bloc/cubit/app_cubit.dart';
 import 'package:fintracker/helpers/db.helper.dart';
+import 'package:fintracker/providers/app_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await getDBInstance();
-  AppState appState = await AppState.getState();
+
+  AppProvider appProvider = await AppProvider.getInstance();
 
   runApp(
-      MultiBlocProvider(
+      MultiProvider(
           providers: [
-            BlocProvider(create: (_)=>AppCubit(appState))
+            ChangeNotifierProvider(create: (_)=>appProvider)
           ],
           child: const App()
       )

@@ -1,14 +1,13 @@
 import 'package:currency_picker/currency_picker.dart';
-import 'package:fintracker/bloc/cubit/app_cubit.dart';
 import 'package:fintracker/helpers/color.helper.dart';
+import 'package:fintracker/providers/app_provider.dart';
 import 'package:fintracker/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class ProfileWidget extends StatefulWidget{
-  final VoidCallback onGetStarted;
-  const ProfileWidget({super.key, required this.onGetStarted});
+  const ProfileWidget({super.key});
 
   @override
   State<StatefulWidget> createState() =>_ProfileWidget();
@@ -28,7 +27,7 @@ class _ProfileWidget extends State<ProfileWidget>{
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
-    AppCubit cubit = context.read<AppCubit>();
+    AppProvider provider = Provider.of<AppProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -38,21 +37,19 @@ class _ProfileWidget extends State<ProfileWidget>{
             const SizedBox(height: 15,),
             Text("Please enter all details to continue.", style: theme.textTheme.bodyLarge!.apply(color: ColorHelper.darken(theme.textTheme.bodyLarge!.color!), fontWeightDelta: 1),),
             const SizedBox(height: 30,),
-            Material(
-                borderRadius: BorderRadius.circular(100),
-                clipBehavior: Clip.hardEdge,
-                child:TextFormField(
+            TextFormField(
                   onChanged: (String username)=>setState(() {
                     _username  = username;
                   }),
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                       filled: true,
-                      border: InputBorder.none,//(borderRadius: BorderRadius.circular(50)),
-                      prefixIcon: Icon(Iconsax.user),
+                      border: UnderlineInputBorder(
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      prefixIcon: const Icon(Iconsax.user_square),
                       hintText: "Enter your name",
-                      label: Text("What should we call you?")
+                      label: const Text("What should we call you?")
                   ),
-                )
             ),
             const SizedBox(height: 40,),
             Autocomplete<Currency>(
@@ -67,16 +64,15 @@ class _ProfileWidget extends State<ProfileWidget>{
                 });
               },
               fieldViewBuilder: (context, controller, focusNode, onFieldSubmitted){
-                return Material(
-                  borderRadius: BorderRadius.circular(100),
-                  clipBehavior: Clip.hardEdge,
-                  child: TextField(controller: controller, focusNode: focusNode, decoration: const InputDecoration(
+                return TextField(controller: controller, focusNode: focusNode, decoration:  InputDecoration(
                       filled: true,
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Iconsax.dollar_circle),
+                      border: UnderlineInputBorder(
+                        borderRadius: BorderRadius.circular(15)
+                      ),
+                      prefixIcon: const Icon(Iconsax.dollar_circle),
                       hintText: "Select you currency",
-                      label: Text("What will be your default currency?")
-                  ),),
+                      label: const Text("What will be your default currency?")
+                  ),
                 );
               },
               displayStringForOption: (selection)=>"(${selection.code}) ${selection.name}",
@@ -91,14 +87,14 @@ class _ProfileWidget extends State<ProfileWidget>{
             AppButton(
               borderRadius: BorderRadius.circular(100),
               label: "Continue",
-              color: theme.colorScheme.inversePrimary,
+              color: theme.colorScheme.primary,
               isFullWidth: true,
               size: AppButtonSize.large,
               onPressed: (){
                 if(_username.isEmpty || _currency == null){
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please fill all the details")));
                 } else {
-                  cubit.update(username: _username, currency: _currency!.code).then((value){
+                  provider.update(username: _username, currency: _currency!.code).then((value){
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Setup completed")));
                   });
                 }

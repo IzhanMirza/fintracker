@@ -1,12 +1,13 @@
-import 'package:fintracker/bloc/cubit/app_cubit.dart';
+import 'package:fintracker/providers/app_provider.dart';
 import 'package:fintracker/screens/accounts/accounts.screen.dart';
 import 'package:fintracker/screens/categories/categories.screen.dart';
 import 'package:fintracker/screens/home/home.screen.dart';
 import 'package:fintracker/screens/onboard/onboard_screen.dart';
+import 'package:fintracker/screens/payments/payments_screen.dart';
 import 'package:fintracker/screens/settings/settings.screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget{
   const MainScreen({super.key});
@@ -24,10 +25,9 @@ class _MainScreenState extends State<MainScreen>{
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppCubit, AppState>(
-      builder: (context, state){
-        AppCubit cubit = context.read<AppCubit>();
-        if(cubit.state.currency == null || cubit.state.username == null){
+    return Consumer<AppProvider>(
+      builder: (context, provider, _){
+        if(provider.currency == null || provider.username == null){
           return OnboardScreen();
         }
         return  Scaffold(
@@ -35,6 +35,7 @@ class _MainScreenState extends State<MainScreen>{
             index: _selected,
             children: const [
               HomeScreen(),
+              PaymentsScreen(),
               AccountsScreen(),
               CategoriesScreen(),
               SettingsScreen()
@@ -43,10 +44,11 @@ class _MainScreenState extends State<MainScreen>{
           bottomNavigationBar: NavigationBar(
             selectedIndex: _selected,
             destinations: const [
-              NavigationDestination(icon: Icon(Iconsax.home), label: "Home"),
-              NavigationDestination(icon: Icon(Iconsax.wallet), label: "Accounts"),
-              NavigationDestination(icon: Icon(Iconsax.category), label: "Categories"),
-              NavigationDestination(icon: Icon(Iconsax.setting), label: "Settings"),
+              NavigationDestination(icon: Icon(Iconsax.home_25), label: "Home"),
+              NavigationDestination(icon: Icon(Iconsax.activity5), label: "Payments"),
+              NavigationDestination(icon: Icon(Iconsax.moneys5), label: "Accounts"),
+              NavigationDestination(icon: Icon(Iconsax.category_25), label: "Categories"),
+              NavigationDestination(icon: Icon(Iconsax.setting_45), label: "Settings"),
             ],
             onDestinationSelected: (int selected){
               setState(() {

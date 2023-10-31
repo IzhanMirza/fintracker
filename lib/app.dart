@@ -1,10 +1,8 @@
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:fintracker/bloc/cubit/app_cubit.dart';
 import 'package:fintracker/screens/main.screen.dart';
 import 'package:fintracker/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:month_year_picker/month_year_picker.dart';
@@ -14,13 +12,17 @@ class App extends StatelessWidget {
   ThemeData _buildTheme(Brightness brightness){
     ThemeData baseTheme = ThemeData(
         brightness: brightness,
-      colorSchemeSeed: ThemeColors.primary,
+      colorSchemeSeed: Colors.amber,
       useMaterial3: true,
         navigationBarTheme: NavigationBarThemeData(
           labelTextStyle: MaterialStateProperty.resolveWith((Set<MaterialState> states){
-            TextStyle style =  TextStyle(fontWeight: FontWeight.w500, fontSize: 12, letterSpacing: -0.3, fontFamily: GoogleFonts.karla().fontFamily);
+            TextStyle style =  TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 12, letterSpacing: -0.3,
+                fontFamily: GoogleFonts.karla().fontFamily,
+            );
             if(states.contains(MaterialState.selected)){
-              style = style.merge(const TextStyle(fontWeight: FontWeight.w600));
+              style = style.merge( const TextStyle(fontWeight: FontWeight.w600));
             }
             return style;
           }),
@@ -28,7 +30,7 @@ class App extends StatelessWidget {
     );
 
     return baseTheme.copyWith(
-      textTheme: GoogleFonts.karlaTextTheme(baseTheme.textTheme),
+       textTheme: GoogleFonts.karlaTextTheme(baseTheme.textTheme),
     );
   }
   @override

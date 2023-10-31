@@ -23,7 +23,7 @@ class LandingPage extends StatelessWidget{
               const SizedBox(height: 25,),
                for(String item in ["Using our app, manage your finances.", "Simple expense monitoring for more accurate budgeting", "Keep track of your spending whenever and wherever you are."])
                  Container(
-                   padding: EdgeInsets.symmetric(vertical: 5),
+                   padding: const EdgeInsets.symmetric(vertical: 5),
                    child: Row(
                      mainAxisSize: MainAxisSize.max,
                      crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,7 +40,7 @@ class LandingPage extends StatelessWidget{
               Container(
                 alignment: Alignment.bottomRight,
                 child: AppButton(
-                  color: theme.colorScheme.inversePrimary,
+                  color: theme.colorScheme.primary,
                   isFullWidth: true,
                   onPressed: onGetStarted,
                   size: AppButtonSize.large,

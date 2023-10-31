@@ -20,7 +20,9 @@ class PaymentDao {
     DateTimeRange? range,
     PaymentType? type,
     Category? category,
-    Account? account
+    Account? account,
+    int? limit,
+    int? offset,
 }) async {
     final db = await getDBInstance();
     String where = "";
@@ -53,7 +55,9 @@ class PaymentDao {
     List<Map<String, Object?>> rows =  await db.query(
         "payments",
         orderBy: "datetime DESC, id DESC",
-        where: "1=1 $where"
+        where: "1=1 $where",
+        limit: limit,
+        offset: offset,
     );
     for (var row in rows) {
       Map<String, dynamic> payment = Map<String, dynamic>.from(row);
@@ -66,7 +70,43 @@ class PaymentDao {
 
     return payments;
   }
+  Future<int> count( {DateTimeRange? range,
+      PaymentType? type,
+      Category? category,
+      Account? account,
+      int? limit,
+      int? offset}) async {
+    final db = await getDBInstance();
+    String where = "";
 
+    if(range!=null){
+      where += "AND datetime BETWEEN DATE('${DateFormat('yyyy-MM-dd kk:mm:ss').format(range.start)}') AND DATE('${DateFormat('yyyy-MM-dd kk:mm:ss').format(range.end.add(const Duration(days: 1)))}')";
+    }
+
+    //type check
+    if(type != null){
+      where += "AND type='${type == PaymentType.credit?"DR":"CR"}' ";
+    }
+
+    //icon check
+    if(account != null){
+      where += "AND account='${account.id}' ";
+    }
+
+    //icon check
+    if(category != null){
+      where += "AND category='${category.id}' ";
+    }
+
+    List<Map<String, Object?>> rows =  await db.query(
+      "payments",
+      where: "1=1 $where",
+      limit: limit,
+      offset: offset,
+      columns: ["count(*) as count"]
+    );
+    return (rows[0]["count"] as int?) ?? 0 ;
+  }
   Future<int> update(Payment payment) async {
     final db = await getDBInstance();
 

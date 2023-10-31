@@ -15,6 +15,7 @@ import 'package:fintracker/widgets/dialog/confirm.modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
 typedef OnCloseCallback = Function(Payment payment);
@@ -186,6 +187,7 @@ class _PaymentForm extends State<PaymentForm>{
     return
       Scaffold(
           appBar: AppBar(
+            leading: IconButton(onPressed: ()=>Navigator.of(context).pop(),icon: Icon(Iconsax.arrow_left_2),),
             title: Text("${widget.payment ==null? "New": "Edit"} Transaction", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
             actions: [
               _id!=null ? IconButton(
@@ -203,7 +205,7 @@ class _PaymentForm extends State<PaymentForm>{
                         }
                     );
 
-                  }, icon: const Icon(Icons.delete, size: 20,), color: ThemeColors.error
+                  }, icon: const Icon(Iconsax.trash, size: 20,), color: ThemeColors.error
               ) : const SizedBox()
             ],
           ),
@@ -254,8 +256,9 @@ class _PaymentForm extends State<PaymentForm>{
                               child: TextFormField(
                                 decoration:  InputDecoration(
                                     filled: true,
-                                    hintText: "Title",
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(15),),
+                                    hintText: "Please enter tittle",
+                                    label: const Text("Title"),
+                                    border: UnderlineInputBorder(borderRadius: BorderRadius.circular(8),),
                                     contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 15)
                                 ),
                                 initialValue: _title,
@@ -268,24 +271,6 @@ class _PaymentForm extends State<PaymentForm>{
                             ),
 
                             Container(
-                              margin: const EdgeInsets.only(left: 15, right: 15, bottom:25),
-                              child: TextFormField(
-                                maxLines: null,
-                                decoration: InputDecoration(
-                                    filled: true,
-                                    hintText: "Description",
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                                    contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 15)
-                                ),
-                                initialValue: _description,
-                                onChanged: (text){
-                                  setState(() {
-                                    _description = text;
-                                  });
-                                },
-                              ),
-                            ),
-                            Container(
                                 margin: const EdgeInsets.only(left: 15, right: 15, bottom:25),
                                 child: TextFormField(
                                   keyboardType: TextInputType.number,
@@ -296,9 +281,10 @@ class _PaymentForm extends State<PaymentForm>{
                                   decoration: InputDecoration(
                                       filled: true,
                                       hintText: "0.0",
+                                      label: const Text("Amount"),
                                       prefixIcon: Padding(padding: const EdgeInsets.only(left: 15), child: CurrencyText(null, style: GoogleFonts.jetBrainsMono())),
                                       prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
-                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                                      border: UnderlineInputBorder(borderRadius: BorderRadius.circular(8),),
                                       contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 15)
                                   ),
                                   initialValue: _amount == 0 ? "" : _amount.toString(),
@@ -368,7 +354,7 @@ class _PaymentForm extends State<PaymentForm>{
                                           minWidth: double.infinity,
                                           color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                                           shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(18),
+                                              borderRadius: BorderRadius.circular(100),
                                               side: const BorderSide(
                                                   width: 1.5,
                                                   color: Colors.transparent
@@ -415,7 +401,7 @@ class _PaymentForm extends State<PaymentForm>{
                                             child:MaterialButton(
                                                 color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                                                 shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(18),
+                                                    borderRadius: BorderRadius.circular(100),
                                                     side: BorderSide(
                                                         width: 1.5,
                                                         color: _account?.id == account.id ? Theme.of(context).colorScheme.primary : Colors.transparent
@@ -480,7 +466,7 @@ class _PaymentForm extends State<PaymentForm>{
                                                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                                 color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                                                 shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(15),
+                                                    borderRadius: BorderRadius.circular(100),
                                                     side: const BorderSide(
                                                         width: 1.5,
                                                         color: Colors.transparent
@@ -516,7 +502,7 @@ class _PaymentForm extends State<PaymentForm>{
                                             child:MaterialButton(
                                                 color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                                                 shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(15),
+                                                    borderRadius: BorderRadius.circular(100),
                                                     side: BorderSide(
                                                         width: 1.5,
                                                         color: _category?.id == category.id ? Theme.of(context).colorScheme.primary : Colors.transparent
@@ -554,7 +540,28 @@ class _PaymentForm extends State<PaymentForm>{
                                   })
 
                               ),
-                            )
+                            ),
+
+                            Container(
+                              margin: const EdgeInsets.only(left: 15, right: 15, bottom:25),
+                              child: TextFormField(
+                                minLines: 2,
+                                maxLines: 10,
+                                decoration: InputDecoration(
+                                    filled: true,
+                                    hintText: "Please enter any description if there.",
+                                    label: const Text("Description"),
+                                    border: UnderlineInputBorder(borderRadius: BorderRadius.circular(8),),
+                                    contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 15)
+                                ),
+                                initialValue: _description,
+                                onChanged: (text){
+                                  setState(() {
+                                    _description = text;
+                                  });
+                                },
+                              ),
+                            ),
                           ],
                         ) ,
                       )
@@ -565,8 +572,8 @@ class _PaymentForm extends State<PaymentForm>{
                 child: AppButton(
                   label: "Save Transaction",
                   height: 50,
-                  labelStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   isFullWidth: true,
+                  borderRadius: BorderRadius.circular(100),
                   onPressed: _amount > 0 && _account!=null && _category!=null ? (){
                     handleSaveTransaction(context);
                   } : null,

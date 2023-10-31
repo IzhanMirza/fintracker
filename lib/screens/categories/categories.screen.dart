@@ -81,6 +81,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           },
         ),
         floatingActionButton: FloatingActionButton(
+          heroTag: "category-hero-fab",
           onPressed: (){
             showDialog(context: context, builder: (builder)=>const CategoryForm());
           },
