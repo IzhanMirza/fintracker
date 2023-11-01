@@ -1,7 +1,9 @@
 import 'package:events_emitter/events_emitter.dart';
+import 'package:ficonsax/ficonsax.dart';
 import 'package:fintracker/dao/account_dao.dart';
 import 'package:fintracker/dao/payment_dao.dart';
 import 'package:fintracker/events.dart';
+import 'package:fintracker/extension.dart';
 import 'package:fintracker/model/account.model.dart';
 import 'package:fintracker/model/category.model.dart';
 import 'package:fintracker/model/payment.model.dart';
@@ -9,11 +11,10 @@ import 'package:fintracker/providers/app_provider.dart';
 import 'package:fintracker/screens/home/widgets/account_slider.dart';
 import 'package:fintracker/screens/home/widgets/payment_list_item.dart';
 import 'package:fintracker/screens/payments/payment_form.screen.dart';
+import 'package:fintracker/screens/settings/settings.screen.dart';
 import 'package:fintracker/theme/colors.dart';
 import 'package:fintracker/widgets/currency.dart';
-import 'package:fintracker/widgets/gradient_container.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -131,14 +132,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 10,),
                     Container(
                       margin: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
                         children: [
-                          Text("Hi! Good ${greeting()}"),
-                          Selector<AppProvider, String?>(
-                              selector: (_,provider)=>provider.username,
-                              builder: (context, state, _)=>Text(state ?? "Guest", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),)
-                          )
+                          Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Hi! Good ${greeting()}"),
+                                  Selector<AppProvider, String?>(
+                                      selector: (_,provider)=>provider.username,
+                                      builder: (context, state, _)=>Text(state ?? "Guest", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),)
+                                  )
+                                ],
+                              )
+                          ),
+                          IconButton(onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (_)=>const SettingsScreen()));
+                          }, icon: const Icon(IconsaxOutline.user_octagon))
+
                         ],
                       ),
                     ),
@@ -200,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             )
                                         ),
                                         const SizedBox(height: 5,),
-                                        CurrencyText(_income, style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: ThemeColors.success, fontFamily: GoogleFonts.jetBrainsMono().fontFamily),)
+                                        CurrencyText(_income, style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: ThemeColors.success, fontFamily: context.monoFontFamily),)
                                       ],
                                     ),
                                   )
@@ -228,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             )
                                         ),
                                         const SizedBox(height: 5,),
-                                        CurrencyText(_expense, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: ThemeColors.error, fontFamily: GoogleFonts.jetBrainsMono().fontFamily),)
+                                        CurrencyText(_expense, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: ThemeColors.error, fontFamily: context.monoFontFamily),)
                                       ],
                                     ),
                                   )

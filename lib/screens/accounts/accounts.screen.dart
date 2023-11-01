@@ -1,13 +1,13 @@
 import 'package:events_emitter/events_emitter.dart';
 import 'package:fintracker/dao/account_dao.dart';
 import 'package:fintracker/events.dart';
+import 'package:fintracker/extension.dart';
 import 'package:fintracker/model/account.model.dart';
 import 'package:fintracker/theme/colors.dart';
 import 'package:fintracker/widgets/currency.dart';
 import 'package:fintracker/widgets/dialog/account_form.dialog.dart';
 import 'package:fintracker/widgets/dialog/confirm.modal.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 maskAccount(String value, [int lastLength = 4]){
   if(value.length <4 ) return value;
@@ -104,7 +104,7 @@ class _AccountsScreenState extends State<AccountsScreen> {
                                   ]
                               )
                           ),
-                          CurrencyText(account.balance??0, style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700, fontFamily: GoogleFonts.jetBrainsMono().fontFamily),),
+                          CurrencyText(account.balance??0, style:  TextStyle(fontSize: 20, fontWeight: FontWeight.w700, fontFamily: context.monoFontFamily),),
                           const SizedBox(height: 10,),
                           Row(
                             children: [
@@ -120,7 +120,7 @@ class _AccountsScreenState extends State<AccountsScreen> {
                                               ]
                                           )
                                       ),
-                                      CurrencyText(account.income??0, style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: ThemeColors.success, fontFamily: GoogleFonts.jetBrainsMono().fontFamily),)
+                                      CurrencyText(account.income??0, style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: ThemeColors.success, fontFamily: context.monoFontFamily),)
                                     ],
                                   )
                               ),
@@ -136,7 +136,7 @@ class _AccountsScreenState extends State<AccountsScreen> {
                                               ]
                                           )
                                       ),
-                                      CurrencyText(account.expense??0, style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: ThemeColors.error, fontFamily: GoogleFonts.jetBrainsMono().fontFamily),)
+                                      CurrencyText(account.expense??0, style:  TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: ThemeColors.error, fontFamily: context.monoFontFamily),)
 
                                     ],
                                   )

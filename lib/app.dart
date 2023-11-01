@@ -4,33 +4,35 @@ import 'package:fintracker/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:month_year_picker/month_year_picker.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
   ThemeData _buildTheme({required Brightness brightness, Color? color}){
+    String fontFamily = "Karla";
     ThemeData baseTheme = ThemeData(
-        brightness: brightness,
+      brightness: brightness,
       colorSchemeSeed: color ?? ThemeColors.primary,
       useMaterial3: true,
-        navigationBarTheme: NavigationBarThemeData(
-          labelTextStyle: MaterialStateProperty.resolveWith((Set<MaterialState> states){
-            TextStyle style =  TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 12, letterSpacing: -0.3,
-                fontFamily: GoogleFonts.karla().fontFamily,
-            );
-            if(states.contains(MaterialState.selected)){
-              style = style.merge( const TextStyle(fontWeight: FontWeight.w600));
-            }
-            return style;
-          }),
-        )
     );
-
     return baseTheme.copyWith(
-       textTheme: GoogleFonts.karlaTextTheme(baseTheme.textTheme),
+       textTheme:  TextTheme(
+         displayLarge: baseTheme.textTheme.displayLarge!.merge( TextStyle(fontFamily: fontFamily)),
+         displayMedium: baseTheme.textTheme.displayMedium!.merge( TextStyle(fontFamily: fontFamily)),
+         displaySmall: baseTheme.textTheme.displaySmall!.merge( TextStyle(fontFamily: fontFamily)),
+         headlineLarge: baseTheme.textTheme.headlineLarge!.merge( TextStyle(fontFamily: fontFamily)),
+         headlineMedium: baseTheme.textTheme.headlineMedium!.merge( TextStyle(fontFamily: fontFamily)),
+         headlineSmall: baseTheme.textTheme.headlineSmall!.merge( TextStyle(fontFamily: fontFamily)),
+         titleLarge: baseTheme.textTheme.titleLarge!.merge( TextStyle(fontFamily: fontFamily)),
+         titleMedium: baseTheme.textTheme.titleMedium!.merge( TextStyle(fontFamily: fontFamily)),
+         titleSmall: baseTheme.textTheme.titleSmall!.merge( TextStyle(fontFamily: fontFamily)),
+         bodyLarge: baseTheme.textTheme.bodyLarge!.merge( TextStyle(fontFamily: fontFamily)),
+         bodyMedium: baseTheme.textTheme.bodyMedium!.merge( TextStyle(fontFamily: fontFamily)),
+         bodySmall: baseTheme.textTheme.bodySmall!.merge( TextStyle(fontFamily: fontFamily)),
+         labelLarge: baseTheme.textTheme.labelLarge!.merge( TextStyle(fontFamily: fontFamily)),
+         labelMedium: baseTheme.textTheme.labelMedium!.merge( TextStyle(fontFamily: fontFamily)),
+         labelSmall: baseTheme.textTheme.labelSmall!.merge( TextStyle(fontFamily: fontFamily)),
+       ),
     );
   }
   @override

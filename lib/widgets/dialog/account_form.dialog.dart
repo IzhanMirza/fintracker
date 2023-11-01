@@ -67,6 +67,7 @@ class _AccountForm extends State<AccountForm>{
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              Divider(),
               const SizedBox(height: 15,),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,7 +91,10 @@ class _AccountForm extends State<AccountForm>{
                         decoration: InputDecoration(
                             labelText: 'Name',
                             hintText: 'Account name',
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(15),),
+                            filled: true,
+                            border: UnderlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                             contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15)
                         ),
                         onChanged: (String text){
@@ -108,7 +112,10 @@ class _AccountForm extends State<AccountForm>{
                   decoration: InputDecoration(
                       labelText: 'Holder name',
                       hintText: 'Enter account holder name',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15),),
+                      filled: true,
+                      border: UnderlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                       contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15)
                   ),
                   initialValue: _account!.holderName,
@@ -126,7 +133,10 @@ class _AccountForm extends State<AccountForm>{
                   decoration: InputDecoration(
                       labelText: 'A/C Number',
                       hintText: 'Enter account number',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15),),
+                      filled: true,
+                      border: UnderlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
                       contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15)
                   ),
                   initialValue: _account!.accountNumber,

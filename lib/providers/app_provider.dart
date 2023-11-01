@@ -43,8 +43,8 @@ class AppProvider extends ChangeNotifier{
   }
 
   Future<void> updateUsername(username) async {
-   _username = username;
-   await sync();
+    _username = username;
+    await sync();
     notifyListeners();
   }
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 extension BuildContextEntension<T> on BuildContext {
   ThemeData get theme => Theme.of(this);
-  String? get monoFontFamily => GoogleFonts.jetBrainsMono().fontFamily;
+  String? get monoFontFamily => "Manrope";
+  String? get sansFontFamily => "Karla";
   LinearGradient get gradient => LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,

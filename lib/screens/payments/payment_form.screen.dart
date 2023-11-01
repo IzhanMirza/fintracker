@@ -1,8 +1,10 @@
 import 'package:events_emitter/listener.dart';
+import 'package:ficonsax/ficonsax.dart';
 import 'package:fintracker/dao/account_dao.dart';
 import 'package:fintracker/dao/category_dao.dart';
 import 'package:fintracker/dao/payment_dao.dart';
 import 'package:fintracker/events.dart';
+import 'package:fintracker/extension.dart';
 import 'package:fintracker/model/account.model.dart';
 import 'package:fintracker/model/category.model.dart';
 import 'package:fintracker/model/payment.model.dart';
@@ -14,8 +16,6 @@ import 'package:fintracker/widgets/buttons/button.dart';
 import 'package:fintracker/widgets/dialog/confirm.modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:intl/intl.dart';
 
 typedef OnCloseCallback = Function(Payment payment);
@@ -187,27 +187,9 @@ class _PaymentForm extends State<PaymentForm>{
     return
       Scaffold(
           appBar: AppBar(
-            leading: IconButton(onPressed: ()=>Navigator.of(context).pop(),icon: const Icon(Iconsax.arrow_left_2),),
-            title: Text("${widget.payment ==null? "New": "Edit"} Transaction", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
-            actions: [
-              _id!=null ? IconButton(
-                  onPressed: (){
-                    ConfirmModal.showConfirmDialog(context, title: "Are you sure?", content: const Text("After deleting payment can't be recovered."),
-                        onConfirm: (){
-                          _paymentDao.deleteTransaction(_id!).then((value) {
-                            globalEvent.emit("payment_update");
-                            Navigator.pop(context);
-                            Navigator.pop(context);
-                          });
-                        },
-                        onCancel: (){
-                          Navigator.pop(context);
-                        }
-                    );
-
-                  }, icon: const Icon(Iconsax.trash, size: 20,), color: ThemeColors.error
-              ) : const SizedBox()
-            ],
+            leading: IconButton(onPressed: ()=>Navigator.of(context).pop(),icon: const Icon(IconsaxOutline.arrow_left_2),),
+            title: Text("${widget.payment ==null? "New": "Edit"} Payment", style: const TextStyle(fontWeight: FontWeight.w600),),
+            centerTitle: true,
           ),
           body: Column(
             children: [
@@ -277,12 +259,12 @@ class _PaymentForm extends State<PaymentForm>{
                                   inputFormatters: <TextInputFormatter>[
                                     FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,4}')),
                                   ],
-                                  style: GoogleFonts.manrope(),
+                                  style:TextStyle(fontFamily: context.monoFontFamily),
                                   decoration: InputDecoration(
                                       filled: true,
                                       hintText: "0.0",
                                       label: const Text("Amount"),
-                                      prefixIcon: Padding(padding: const EdgeInsets.only(left: 15), child: CurrencyText(null, style: GoogleFonts.jetBrainsMono())),
+                                      prefixIcon: Padding(padding: const EdgeInsets.only(left: 15), child: CurrencyText(null, style: TextStyle(fontFamily: context.monoFontFamily))),
                                       prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
                                       border: UnderlineInputBorder(borderRadius: BorderRadius.circular(8),),
                                       contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 15)
@@ -569,15 +551,44 @@ class _PaymentForm extends State<PaymentForm>{
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                child: AppButton(
-                  label: "Save Transaction",
-                  height: 50,
-                  isFullWidth: true,
-                  borderRadius: BorderRadius.circular(100),
-                  onPressed: _amount > 0 && _account!=null && _category!=null ? (){
-                    handleSaveTransaction(context);
-                  } : null,
-                  color: Theme.of(context).colorScheme.primary,
+                child: Row(
+                  children: [
+                    if(widget.payment !=null) AppButton(
+                        height: 50,
+                        width: 50,
+                        onPressed: (){
+                          ConfirmModal.showConfirmDialog(context, title: "Are you sure?", content: const Text("After deleting payment can't be recovered."),
+                              onConfirm: (){
+                                _paymentDao.deleteTransaction(_id!).then((value) {
+                                  globalEvent.emit("payment_update");
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                });
+                              },
+                              onCancel: (){
+                                Navigator.pop(context);
+                              }
+                          );
+
+                        },
+                        icon: IconsaxOutline.trash,
+                        color: ThemeColors.error,
+                      iconSize: 20,
+                    ),
+                    if(widget.payment !=null)const SizedBox(width: 10,),
+                    Expanded(
+                        child:  AppButton(
+                          label: "Save Transaction",
+                          height: 50,
+                          isFullWidth: true,
+                          borderRadius: BorderRadius.circular(100),
+                          onPressed: _amount > 0 && _account!=null && _category!=null ? (){
+                            handleSaveTransaction(context);
+                          } : null,
+                          color: Theme.of(context).colorScheme.primary,
+                        )
+                    ),
+                  ],
                 ),
               )
             ],

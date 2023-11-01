@@ -1,9 +1,10 @@
 import 'package:currency_picker/currency_picker.dart';
+import 'package:ficonsax/ficonsax.dart';
 import 'package:fintracker/helpers/color.helper.dart';
+import 'package:fintracker/helpers/db.helper.dart';
 import 'package:fintracker/providers/app_provider.dart';
 import 'package:fintracker/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:provider/provider.dart';
 
 class ProfileWidget extends StatefulWidget{
@@ -49,9 +50,9 @@ class _ProfileWidget extends State<ProfileWidget>{
                             decoration: InputDecoration(
                                 filled: true,
                                 border: UnderlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15)
+                                    borderRadius: BorderRadius.circular(20)
                                 ),
-                                prefixIcon: const Icon(Iconsax.user_square),
+                                prefixIcon:  const Icon(IconsaxOutline.profile_circle),
                                 hintText: "Enter your name",
                                 label: const Text("What should we call you?")
                             ),
@@ -72,9 +73,9 @@ class _ProfileWidget extends State<ProfileWidget>{
                               return TextField(controller: controller, focusNode: focusNode, decoration:  InputDecoration(
                                   filled: true,
                                   border: UnderlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15)
+                                      borderRadius: BorderRadius.circular(20)
                                   ),
-                                  prefixIcon: const Icon(Iconsax.dollar_circle),
+                                  prefixIcon: const Icon(IconsaxOutline.dollar_circle),
                                   hintText: "Select you currency",
                                   label: const Text("What will be your default currency?")
                               ),
@@ -96,10 +97,12 @@ class _ProfileWidget extends State<ProfileWidget>{
                     color: theme.colorScheme.primary,
                     isFullWidth: true,
                     size: AppButtonSize.large,
-                    onPressed: (){
+                    onPressed: () async {
                       if(_username.isEmpty || _currency == null){
                         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please fill all the details")));
                       } else {
+                        await resetDatabase();
+                        await provider.reset();
                         provider.update(username: _username, currency: _currency!.code).then((value){
                           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Setup completed")));
                         });

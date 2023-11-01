@@ -1,12 +1,12 @@
 import 'package:fintracker/dao/category_dao.dart';
 import 'package:fintracker/data/icons.dart';
 import 'package:fintracker/events.dart';
+import 'package:fintracker/extension.dart';
 import 'package:fintracker/model/category.model.dart';
 import 'package:fintracker/widgets/buttons/button.dart';
 import 'package:fintracker/widgets/currency.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 typedef Callback = void Function();
 class CategoryForm extends StatefulWidget {
   final Category? category;
@@ -77,8 +77,9 @@ class _CategoryForm extends State<CategoryForm>{
                       decoration: InputDecoration(
                         labelText: 'Name',
                         hintText: 'Enter Category name',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
+                        filled: true,
+                        border: UnderlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
                         contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15)
                       ),
@@ -99,16 +100,17 @@ class _CategoryForm extends State<CategoryForm>{
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,4}')),
                 ],
-                style: GoogleFonts.manrope(),
+                style: TextStyle(fontFamily: context.monoFontFamily),
                 decoration: InputDecoration(
-                    labelText: 'Budget',
-                    hintText: 'Enter budget',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
-                  prefixIcon: Padding(padding: const EdgeInsets.only(left: 15), child: CurrencyText(null, style: GoogleFonts.jetBrainsMono())),
-                  prefixIconConstraints: const BoxConstraints(minWidth: 0, minHeight: 0),
+                  labelText: 'Budget',
+                  hintText: 'Enter budget',
+                  filled: true,
+                  border: UnderlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+                  prefixIcon: Padding(padding: const EdgeInsets.only(left: 15), child: CurrencyText(null, style: TextStyle(fontFamily: context.monoFontFamily))),
+                  prefixIconConstraints: const BoxConstraints(minWidth: 40, minHeight: 0),
                 ),
                 onChanged: (String text){
                   setState(() {

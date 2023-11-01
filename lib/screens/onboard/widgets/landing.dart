@@ -1,7 +1,7 @@
+import 'package:ficonsax/ficonsax.dart';
 import 'package:fintracker/helpers/color.helper.dart';
 import 'package:fintracker/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 class LandingPage extends StatelessWidget{
   final VoidCallback onGetStarted;
@@ -31,7 +31,7 @@ class LandingPage extends StatelessWidget{
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(Iconsax.tick_circle,  color: theme.colorScheme.primary,),
+                              Icon(IconsaxOutline.tick_circle,  color: theme.colorScheme.primary,),
                               const SizedBox(width: 15,),
                               Expanded(child: Text(item))
                             ],
