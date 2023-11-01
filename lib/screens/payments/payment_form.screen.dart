@@ -15,7 +15,7 @@ import 'package:fintracker/widgets/dialog/confirm.modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:intl/intl.dart';
 
 typedef OnCloseCallback = Function(Payment payment);
@@ -187,7 +187,7 @@ class _PaymentForm extends State<PaymentForm>{
     return
       Scaffold(
           appBar: AppBar(
-            leading: IconButton(onPressed: ()=>Navigator.of(context).pop(),icon: Icon(Iconsax.arrow_left_2),),
+            leading: IconButton(onPressed: ()=>Navigator.of(context).pop(),icon: const Icon(Iconsax.arrow_left_2),),
             title: Text("${widget.payment ==null? "New": "Edit"} Transaction", style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),),
             actions: [
               _id!=null ? IconButton(

@@ -14,9 +14,9 @@ class OnboardScreen extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           LandingPage(onGetStarted: (){
-            _pageController.animateToPage(1,duration: Duration(milliseconds: 300), curve: Curves.bounceIn);
+            _pageController.animateToPage(1,duration: const Duration(milliseconds: 350), curve: Curves.easeIn);
           },),
-          ProfileWidget(),
+          const ProfileWidget(),
         ],
       ),
     );

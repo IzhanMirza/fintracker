@@ -9,10 +9,10 @@ import 'package:month_year_picker/month_year_picker.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
-  ThemeData _buildTheme(Brightness brightness){
+  ThemeData _buildTheme({required Brightness brightness, Color? color}){
     ThemeData baseTheme = ThemeData(
         brightness: brightness,
-      colorSchemeSeed: Colors.amber,
+      colorSchemeSeed: color ?? ThemeColors.primary,
       useMaterial3: true,
         navigationBarTheme: NavigationBarThemeData(
           labelTextStyle: MaterialStateProperty.resolveWith((Set<MaterialState> states){
@@ -41,17 +41,20 @@ class App extends StatelessWidget {
         statusBarIconBrightness: isDarkMode?  Brightness.light: Brightness.dark
     ));
 
-    return MaterialApp(
-      title: 'Fintracker',
-      theme: _buildTheme(Brightness.light),
-      darkTheme: _buildTheme(Brightness.dark),
-      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      home: const MainScreen(),
-      localizationsDelegates: const [
-        GlobalWidgetsLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        MonthYearPickerLocalizations.delegate,
-      ],
-    );
+    return DynamicColorBuilder(
+        builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+          return MaterialApp(
+            title: 'Fintracker',
+            theme: _buildTheme(brightness: Brightness.light, color: lightDynamic?.primary),
+            darkTheme: _buildTheme(brightness: Brightness.dark,  color: darkDynamic?.primary),
+            themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
+            home: const MainScreen(),
+            localizationsDelegates: const [
+              GlobalWidgetsLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              MonthYearPickerLocalizations.delegate,
+            ],
+          );
+        });
   }
 }

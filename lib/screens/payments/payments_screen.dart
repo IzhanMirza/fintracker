@@ -32,7 +32,7 @@ class _PaymentsScreenState extends State<PaymentsScreen> {
         _payments.addAll(payments);
       });
     } else{
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No more transactions"), duration: Duration(seconds: 1),));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("No more transactions"), duration: Duration(seconds: 1),));
     }
   }
 

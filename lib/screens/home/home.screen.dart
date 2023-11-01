@@ -123,8 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GradientContainer(
-        child: SafeArea(
+      body: SafeArea(
             child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,7 +265,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
             ),
           )
-      )
     );
   }
 }

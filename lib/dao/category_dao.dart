@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:fintracker/helpers/db.helper.dart';
 import 'package:fintracker/model/category.model.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CategoryDao {
@@ -10,7 +11,7 @@ class CategoryDao {
     return result;
   }
 
-  Future<List<Category>> find({ bool withSummery = true }) async {
+  Future<List<Category>> find({ bool withSummery = true, DateTimeRange? range }) async {
     final db = await getDBInstance();
 
     List<Map<String, dynamic>> result;
@@ -19,8 +20,8 @@ class CategoryDao {
         "c.id","c.name","c.icon","c.color", "c.budget",
         "SUM(CASE WHEN t.type='DR' AND t.category=c.id THEN t.amount END) as expense"
       ].join(",");
-      DateTime from = DateTime(DateTime.now().year, DateTime.now().month,1,0,0);
-      DateTime to = DateTime.now().add(const Duration(days: 1));
+      DateTime from = range!=null ? range.start : DateTime(DateTime.now().year, DateTime.now().month,1,0,0);
+      DateTime to =  range!=null ? range.end : DateTime.now().add(const Duration(days: 1));
       DateFormat formatter = DateFormat("yyyy-MM-dd HH:mm");
       String sql = "SELECT $fields FROM categories c "
           "LEFT JOIN payments t ON t.category = c.id AND t.datetime BETWEEN DATE('${formatter.format(from)}') AND DATE('${formatter.format(to)}')"

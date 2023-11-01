@@ -6,7 +6,7 @@ import 'package:fintracker/screens/onboard/onboard_screen.dart';
 import 'package:fintracker/screens/payments/payments_screen.dart';
 import 'package:fintracker/screens/settings/settings.screen.dart';
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget{
@@ -44,11 +44,11 @@ class _MainScreenState extends State<MainScreen>{
           bottomNavigationBar: NavigationBar(
             selectedIndex: _selected,
             destinations: const [
-              NavigationDestination(icon: Icon(Iconsax.home_25), label: "Home"),
-              NavigationDestination(icon: Icon(Iconsax.activity5), label: "Payments"),
-              NavigationDestination(icon: Icon(Iconsax.moneys5), label: "Accounts"),
-              NavigationDestination(icon: Icon(Iconsax.category_25), label: "Categories"),
-              NavigationDestination(icon: Icon(Iconsax.setting_45), label: "Settings"),
+              NavigationDestination(icon: Icon(Iconsax.home_2), label: "Home"),
+              NavigationDestination(icon: Icon(Iconsax.activity), label: "Payments"),
+              NavigationDestination(icon: Icon(Iconsax.wallet), label: "Accounts"),
+              NavigationDestination(icon: Icon(Iconsax.category_2), label: "Categories"),
+              NavigationDestination(icon: Icon(Iconsax.setting), label: "Settings"),
             ],
             onDestinationSelected: (int selected){
               setState(() {
