@@ -67,7 +67,7 @@ class _AccountForm extends State<AccountForm>{
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Divider(),
+              Divider(),
               const SizedBox(height: 15,),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,

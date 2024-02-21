@@ -6,7 +6,6 @@ import 'package:fintracker/screens/categories/categories.screen.dart';
 import 'package:fintracker/screens/home/home.screen.dart';
 import 'package:fintracker/screens/onboard/onboard_screen.dart';
 import 'package:fintracker/screens/payments/payments_screen.dart';
-import 'package:fintracker/screens/settings/settings.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
