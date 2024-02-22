@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+/// The `AppProvider` class in Dart is a ChangeNotifier that manages user data such as username, color
+/// theme, and currency preferences using SharedPreferences.
 class AppProvider extends ChangeNotifier{
   String? _username;
   Color ?_color;
@@ -10,6 +12,11 @@ class AppProvider extends ChangeNotifier{
   Color? get color => _color;
   String? get currency => _currency;
 
+  /// This Dart function initializes an AppProvider instance with data retrieved from SharedPreferences
+  /// and notifies listeners.
+  /// 
+  /// Returns:
+  ///   The `getInstance` method is returning a `Future` that resolves to an instance of `AppProvider`.
   static Future<AppProvider> getInstance() async {
     AppProvider provider =  AppProvider();
     provider._preferences = await SharedPreferences.getInstance();
