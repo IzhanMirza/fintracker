@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// The `AppIcons` class in Dart contains a static list of various icon data for different categories.
 class AppIcons {
   static final List<IconData> icons = [
     Icons.wallet,
